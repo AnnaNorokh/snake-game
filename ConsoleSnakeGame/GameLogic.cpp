@@ -46,14 +46,16 @@ bool GameLogic::game_menu()
 
 void GameLogic::game_logic()
 {
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 
 	//init snake position
+	snakeTail.X = xElem[0];
+	snakeTail.Y = yElem[0];
 	xElem[0] = snakeHead.X;
 	yElem[0] = snakeHead.Y;
 
 	//snake move logic
-	for (int i = 0; i < snakeSize; i++) {
+	for (int i = 1; i < snakeSize; i++) {
 		supportTail.X = xElem[i];
 		supportTail.Y = yElem[i];
 		xElem[i] = snakeTail.X;
@@ -85,10 +87,10 @@ void GameLogic::game_logic()
 	}
 
 	//fruits eating logic 
-	if (snakeHead.X == fruit.X && snakeHead.Y == fruit.Y) {                  //if snake ate fruit
+	if (snakeHead.X == fruit.X && snakeHead.Y == fruit.Y) {						//if snake ate fruit
 		//randomize new fruit position
-		fruit.X = rand() % (MAP_HEIGHT - 3) + 3;							// diapason (20-3) to 3 to avoid frut creation in wall
-		fruit.Y = rand() % (MAP_WIGHT - 3) + 3;								// diapason (45-3) to 3
+		fruit.X = 3 + rand() % (MAP_HEIGHT - 3);								// diapason  17 to 3 to avoid frut creation in wall
+		fruit.Y = 3 + rand() % (MAP_WIGHT - 3);									// diapason  42 to 3
 
 		//append score and snake size
 		nGameScore += 5;
@@ -177,21 +179,20 @@ void GameLogic::game_input()
 
 void GameLogic::game_run()
 {
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 
 	//set game init settings
 	direction = STOP;
 	nGameScore = 0;
 	snakeSize = 0;
-	//bRestart = true;
 
 	//set snake start point 
 	snakeHead.X = MAP_HEIGHT / 2;
 	snakeHead.Y = MAP_WIGHT / 2;
 
 	//set first fruit spawn
-	fruit.X = rand() % (MAP_HEIGHT - 3) + 3;
-	fruit.Y = rand() % (MAP_WIGHT - 3) + 3;
+	fruit.X  = 3 + rand() % (MAP_HEIGHT - 3);
+	fruit.Y  = 3 + rand() % (MAP_WIGHT - 3);
 }
 
 bool GameLogic::restart() {
